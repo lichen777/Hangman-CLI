@@ -1,0 +1,22 @@
+{
+  "name": "hangman-cli",
+  "version": "1.0.0",
+  "description": "Hangman game in CLI",
+  "main": "hangman.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lichen777/Hangman-CLI.git"
+  },
+  "author": "Chen Li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lichen777/Hangman-CLI/issues"
+  },
+  "homepage": "https://github.com/lichen777/Hangman-CLI#readme",
+  "dependencies": {
+    "inquirer": "^5.0.0"
+  }
+}
