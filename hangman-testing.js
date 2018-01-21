@@ -28,9 +28,11 @@ var question = {
 }
 
 class Hangman {
-  constructor() {
+  constructor(count) {
     this.word = '';
     this.wordToGuess = {};
+    this.guessRemain = count;
+    this.current = '';
   }
   start() {
     this.word = getWord();
@@ -47,12 +49,18 @@ class Hangman {
   ask() {
     inquirer.prompt(question).then(answers => {
       var guessedLetter = answers.letter;
-      console.log(this.wordToGuess.wordProcess(guessedLetter));
+      if (this.current !== )
+      this.current = this.wordToGuess.wordProcess(guessedLetter);
+      console.log(this.current);
+      if (this.guessRemain > 0) {
+        this.ask();
+      } else {
+        this.start();
+      }
 
-      this.ask();
     })
   }
 }
 
-var game = new Hangman();
+var game = new Hangman(10);
 game.start();
