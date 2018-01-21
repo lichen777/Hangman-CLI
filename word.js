@@ -6,6 +6,8 @@ class Word {
     this.lettersArr = this.wordToGuess.split("");
     this.currentLetters = [];
     this.guessedList = [];
+    this.allGuessed = false;
+    this.isThisGuessRight = false;
   }
   initialize() {
     for (let letter of this.lettersArr) {
@@ -26,13 +28,20 @@ class Word {
     }
   }
   guessLetter(s) {
+    this.isThisGuessRight = false;
     if(this.guessedList.indexOf(s) === -1) {
       this.guessedList.push(s);
+      var checkAllGuessed = true;
       for (let letter of this.currentLetters) {
         if(s === letter.value && letter.isGuessed === false) {
           letter.isGuessed = true;
+          this.isThisGuessRight = true;
+        }
+        if (letter.isGuessed === false) {
+          checkAllGuessed = false;
         }
       }
+      this.allGuessed = checkAllGuessed;
     }
   }
   wordProcess(s) {

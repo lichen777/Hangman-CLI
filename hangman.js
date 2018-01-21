@@ -18,26 +18,55 @@ var question = {
   }
 }
 
-function start() {
-  var word = getWord();
-  var wordToGuess = new Word(word);
-  wordToGuess.initialize();
-  
-  inquirer.prompt(beginning).then(answers => {
-    if(answers.start){
-      ask();
-    } else {
-      start();
+class Hangman {
+  constructor(count) {
+    this.word = '';
+    this.wordToGuess = {};
+    this.guessRemain = count;
+    this.numOfGuessed = 0;
+    this.current = '';
+  }
+  start() {
+    this.word = getWord();
+    this.wordToGuess = new Word(this.word);
+    this.wordToGuess.initialize();
+    inquirer.prompt(beginning).then(answers => {
+      if(answers.start){
+        this.ask();
+      } else {
+        console.log('Run "Node hangman.js" again when you are ready!')
+      }
+    })
+  }
+  ask() {
+    inquirer.prompt(question).then(answers => {
+      var guessedLetter = answers.letter;
+      this.judge(guessedLetter);
+    })
+  }
+  judge(guessedLetter) {
+    this.current = this.wordToGuess.wordProcess(guessedLetter);
+    if (this.wordToGuess.isThisGuessRight === false && this.numOfGuessed !== this.wordToGuess.guessedList.length) {
+      this.guessRemain -= 1;;
     }
-  })
+    this.numOfGuessed = this.wordToGuess.guessedList.length;
+    console.log(this.current);
+    console.log("Remaining guesses: " + this.guessRemain);
+    if (this.wordToGuess.allGuessed === true) {
+      console.log("You win! Start Over.");
+      var game = new Hangman(10);
+      return game.start();
+    }
+    if (this.guessRemain > 0) {
+      this.ask();
+    } else {
+      console.log("No guess remains. Start Over.");
+      console.log("Correct Answer: " + this.word);
+      var game = new Hangman(10);
+      game.start();
+    }
+  }
 }
 
-function ask() {
-  inquirer.prompt(question).then(answers => {
-    var guessedLetter = answers.letter;
-    console.log(wordToGuess.wordProcess(guessedLetter));
-    ask();
-  })
-}
-
-start();
+var game = new Hangman(10);
+game.start();
