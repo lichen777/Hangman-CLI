@@ -1,39 +1,45 @@
-import Letter from 'letter';
+var Letter = require('./letter');
 
 class Word {
   constructor(word) {
     this.wordToGuess = word;
     this.lettersArr = this.wordToGuess.split("");
+    this.currentLetters = [];
+    this.guessedList = [];
   }
-  splitWord() {
-    let letters = [];
+  initialize() {
     for (let letter of this.lettersArr) {
-      var curLetter = new Letter(letter, false);
-      letters.push(curLetter);
+      let curLetter = new Letter(letter, false);
+      this.currentLetters.push(curLetter);
     }
-    return letters;
   }
-  combineWord(letters) {
+  combineWord() {
     let result = [];
-    for (let letter of letters) {
+    for (let letter of this.currentLetters) {
       result.push(letter.display());
     }
-    return result.join("");
+    return result.join(" ");
   }
-  updateStatus(letters) {
-    for (let letter of letters) {
+  updateStatus() {
+    for (let letter of this.currentLetters) {
       letter = letter.display();
     }
-    return letters;
   }
-  guessLetter(s, letters) {
-    for (let letter of letters) {
-      if(s === letter.value && letter.isGuessed === false) {
-        letter.isGuessed = true;
+  guessLetter(s) {
+    if(this.guessedList.indexOf(s) === -1) {
+      this.guessedList.push(s);
+      for (let letter of this.currentLetters) {
+        if(s === letter.value && letter.isGuessed === false) {
+          letter.isGuessed = true;
+        }
       }
     }
-    return letters;
+  }
+  wordProcess(s) {
+    this.guessLetter(s);
+    this.updateStatus();
+    return this.combineWord();
   }
 }
 
-export default Word;
+module.exports = Word;

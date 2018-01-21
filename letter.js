@@ -4,11 +4,11 @@ class Letter {
     this.isGuessed = isGuessed;
   }
   display() {
-    if(isGuessed) {
+    if(this.isGuessed) {
       return this.value;
     }
     return "_";
   }
 }
 
-export default Letter;
+module.exports = Letter;

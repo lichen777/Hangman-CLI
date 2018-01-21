@@ -19,13 +19,25 @@ var question = {
 }
 
 function start() {
+  var word = getWord();
+  var wordToGuess = new Word(word);
+  wordToGuess.initialize();
+  
   inquirer.prompt(beginning).then(answers => {
-
+    if(answers.start){
+      ask();
+    } else {
+      start();
+    }
   })
 }
 
 function ask() {
   inquirer.prompt(question).then(answers => {
-
+    var guessedLetter = answers.letter;
+    console.log(wordToGuess.wordProcess(guessedLetter));
+    ask();
   })
 }
+
+start();
