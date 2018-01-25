@@ -6,7 +6,7 @@ Hangman-CLI is a hangman Node.JS command-line game using Class building feature 
 This game also uses the `inquirer` npm package for User Interface and File System for word libray reading.
 
 ### Logic Diagram
-![Structure Diagram](/Hangman diagram.png)
+![Structure Diagram](/Hangman%20diagram.png)
 
  The game used as different types of classes to build the architecture:
 
